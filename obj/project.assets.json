@@ -5359,11 +5359,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\chris\\Documents\\Paycompute\\Paycompute.csproj",
+      "projectUniqueName": "C:\\Users\\chris\\Documents\\PaycomputeApp\\Paycompute\\Paycompute.csproj",
       "projectName": "Paycompute",
-      "projectPath": "C:\\Users\\chris\\Documents\\Paycompute\\Paycompute.csproj",
+      "projectPath": "C:\\Users\\chris\\Documents\\PaycomputeApp\\Paycompute\\Paycompute.csproj",
       "packagesPath": "C:\\Users\\chris\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\chris\\Documents\\Paycompute\\obj\\",
+      "outputPath": "C:\\Users\\chris\\Documents\\PaycomputeApp\\Paycompute\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\chris\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5379,11 +5379,11 @@
       "frameworks": {
         "netcoreapp3.0": {
           "projectReferences": {
-            "C:\\Users\\chris\\Documents\\Paycompute.Entity\\Paycompute.Entity.csproj": {
-              "projectPath": "C:\\Users\\chris\\Documents\\Paycompute.Entity\\Paycompute.Entity.csproj"
+            "C:\\Users\\chris\\Documents\\PaycomputeApp\\Paycompute.Entity\\Paycompute.Entity.csproj": {
+              "projectPath": "C:\\Users\\chris\\Documents\\PaycomputeApp\\Paycompute.Entity\\Paycompute.Entity.csproj"
             },
-            "C:\\Users\\chris\\Documents\\Paycompute.Services\\Paycompute.Services.csproj": {
-              "projectPath": "C:\\Users\\chris\\Documents\\Paycompute.Services\\Paycompute.Services.csproj"
+            "C:\\Users\\chris\\Documents\\PaycomputeApp\\Paycompute.Services\\Paycompute.Services.csproj": {
+              "projectPath": "C:\\Users\\chris\\Documents\\PaycomputeApp\\Paycompute.Services\\Paycompute.Services.csproj"
             }
           }
         }
