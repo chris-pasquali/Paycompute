@@ -136,3 +136,5 @@ C:\Users\chris\Documents\PaycomputeApp\Paycompute\obj\Debug\netcoreapp3.0\Paycom
 C:\Users\chris\Documents\PaycomputeApp\Paycompute\obj\Debug\netcoreapp3.0\Paycompute.RazorTargetAssemblyInfo.cs
 C:\Users\chris\Documents\PaycomputeApp\Paycompute\obj\Debug\netcoreapp3.0\Paycompute.Views.pdb
 C:\Users\chris\Documents\PaycomputeApp\Paycompute\obj\Debug\netcoreapp3.0\Paycompute.csproj.CopyComplete
+C:\Users\chris\Documents\PaycomputeApp\Paycompute\obj\Debug\netcoreapp3.0\Razor\Views\Shared\_CookieConsentPartial.cshtml.g.cs
+C:\Users\chris\Documents\PaycomputeApp\Paycompute\obj\Debug\netcoreapp3.0\Razor\Views\Employee\Index.cshtml.g.cs
