@@ -2,6 +2,7 @@
 using Paycompute.Entity;
 using Paycompute.Models;
 using Paycompute.Services;
+using RotativaCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,6 +101,96 @@ namespace Paycompute.Controllers
             ViewBag.employee = _employeeService.GetAllEmployeeForPayroll();
             ViewBag.taxYears = _payComputationService.GetAllTaxYear();
             return View();
+        }
+
+        public IActionResult Detail(int id)
+        {
+            var paymentRecord = _payComputationService.GetById(id);
+            if (paymentRecord == null)
+            {
+                return NotFound();
+            }
+
+            var model = new PaymentRecordDetailViewModel() 
+            { 
+                Id = paymentRecord.Id,
+                EmployeeId = paymentRecord.EmployeeId,
+                FullName = paymentRecord.FullName,
+                NiNo = paymentRecord.NiNo,
+                PayDate = paymentRecord.PayDate,
+                PayMonth = paymentRecord.PayMonth,
+                TaxYearId = paymentRecord.TaxYearId,
+                Year = _payComputationService.GetTaxYearById(paymentRecord.TaxYearId).YearOfTax,
+                TaxCode = paymentRecord.TaxCode,
+                HourlyRate = paymentRecord.HourlyRate,
+                HoursWorked = paymentRecord.HoursWorked,
+                ContractualHours = paymentRecord.ContractualHours,
+                OvertimeHours = paymentRecord.OvertimeHours,
+                OvertimeRate = _payComputationService.OvertimeRate(paymentRecord.HourlyRate),
+                ContractualEarnings = paymentRecord.ContractualEarnings,
+                OvertimeEarnings = paymentRecord.OvertimeEarnings,
+                Tax = paymentRecord.Tax,
+                NIC = paymentRecord.NIC,
+                UnionFee = paymentRecord.UnionFee,
+                SLC = paymentRecord.SLC,
+                TotalEarnings = paymentRecord.TotalEarnings,
+                TotalDeduction = paymentRecord.TotalDeduction,
+                Employee = paymentRecord.Employee,
+                TaxYear = paymentRecord.TaxYear,
+                NetPayment = paymentRecord.NetPayment
+            };
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Payslip(int id)
+        {
+            var paymentRecord = _payComputationService.GetById(id);
+            if (paymentRecord == null)
+            {
+                return NotFound();
+            }
+
+            var model = new PaymentRecordDetailViewModel()
+            {
+                Id = paymentRecord.Id,
+                EmployeeId = paymentRecord.EmployeeId,
+                FullName = paymentRecord.FullName,
+                NiNo = paymentRecord.NiNo,
+                PayDate = paymentRecord.PayDate,
+                PayMonth = paymentRecord.PayMonth,
+                TaxYearId = paymentRecord.TaxYearId,
+                Year = _payComputationService.GetTaxYearById(paymentRecord.TaxYearId).YearOfTax,
+                TaxCode = paymentRecord.TaxCode,
+                HourlyRate = paymentRecord.HourlyRate,
+                HoursWorked = paymentRecord.HoursWorked,
+                ContractualHours = paymentRecord.ContractualHours,
+                OvertimeHours = paymentRecord.OvertimeHours,
+                OvertimeRate = _payComputationService.OvertimeRate(paymentRecord.HourlyRate),
+                ContractualEarnings = paymentRecord.ContractualEarnings,
+                OvertimeEarnings = paymentRecord.OvertimeEarnings,
+                Tax = paymentRecord.Tax,
+                NIC = paymentRecord.NIC,
+                UnionFee = paymentRecord.UnionFee,
+                SLC = paymentRecord.SLC,
+                TotalEarnings = paymentRecord.TotalEarnings,
+                TotalDeduction = paymentRecord.TotalDeduction,
+                Employee = paymentRecord.Employee,
+                TaxYear = paymentRecord.TaxYear,
+                NetPayment = paymentRecord.NetPayment
+            };
+            return View(model);
+        }
+
+        public IActionResult GeneratePayslipPdf(int id)
+        {
+            // ActionAsPdf method initially used by doesn't work with .net core 3.0.0
+            // var payslip = new ActionAsPdf("Payslip", new { id = id })
+            var payslip = new ViewAsPdf("Payslip", new { id = id })
+            {
+                FileName = "payslip.pdf"
+            };
+            return payslip;
         }
     }
 }
