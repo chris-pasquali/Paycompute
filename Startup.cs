@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Paycompute.Services;
 using Paycompute.Services.Implementation;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace Paycompute
 {
@@ -32,8 +33,33 @@ namespace Paycompute
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            // services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Default Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+                // Default lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+            });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -41,10 +67,13 @@ namespace Paycompute
             services.AddScoped<IPayComputationService, PayComputationService>();
             services.AddScoped<INationalInsuranceContributionService, NationalInsuranceContributionService>();
             services.AddScoped<ITaxService, TaxService>();
+            services.AddScoped<IEmailSender, EmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+                                UserManager<IdentityUser> userManager,
+                                RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -64,6 +93,8 @@ namespace Paycompute
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            DataSeedingInitializer.UserAndRoleSeedAsync(userManager, roleManager).Wait();
 
             app.UseEndpoints(endpoints =>
             {
